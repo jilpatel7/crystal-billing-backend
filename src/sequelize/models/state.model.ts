@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { AutoIncrement, Column, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { IState } from "../interface";
 @Table({
   tableName: "states",
@@ -7,6 +7,7 @@ import { IState } from "../interface";
 export default class State extends Model<IState> {
   @PrimaryKey
   @AutoIncrement
+  @AllowNull(false)
   @Column({
     type: DataTypes.INTEGER,
     allowNull: false,
