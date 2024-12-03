@@ -2,31 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('party_addresses', {
+    await queryInterface.createTable('order_details', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      party_id: {
+      order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'parties',
+          model: 'orders',
           key: 'id'
         }
       },
-      address: {
-        type: Sequelize.TEXT,
+      no_of_diamonds: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      landmark: {
-        type: Sequelize.STRING
+      total_caret: {
+        type: Sequelize.FLOAT,
+        allowNull: false
       },
-      pincode: {
+      status: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'pending'
       },
       deleted_at: {
         type: Sequelize.DATE
@@ -42,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('party_addresses');
+    await queryInterface.dropTable('order_details');
   }
 };

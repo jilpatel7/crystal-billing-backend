@@ -1,6 +1,7 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, DataType, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import Party from "./party";
 import { IPartyAddress, IPartyAddressCreate } from "../interface";
+import { DataTypes } from "sequelize";
 
 @Table({
   tableName: 'party_addresses',
@@ -12,30 +13,30 @@ export default class PartyAddress extends Model<IPartyAddress, IPartyAddressCrea
   @AutoIncrement
   @AllowNull(false)
   @Column({
-    type: DataType.INTEGER
+    type: DataTypes.INTEGER
   })
   declare id: number;
 
   @ForeignKey(() => Party)
   @Column({
-    type: DataType.INTEGER
+    type: DataTypes.INTEGER
   })
   declare party_id: number;
 
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataTypes.STRING
   })
   declare address: string;
 
   @Column({
-    type: DataType.STRING
+    type: DataTypes.STRING
   })
   declare landmark: string;
 
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataTypes.STRING
   })
   declare pincode: string;
 

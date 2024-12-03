@@ -1,0 +1,12 @@
+export interface IOrderDetails {
+  id: number;
+  order_id: number;
+  no_of_diamonds: number;
+  total_caret: number;
+  //TODO : make this as enum
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+}
+export interface IOrderDetailsCreate extends Omit<IOrderDetails, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> { }

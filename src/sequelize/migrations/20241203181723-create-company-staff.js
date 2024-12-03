@@ -2,30 +2,45 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('party_addresses', {
+    await queryInterface.createTable('company_staffs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      party_id: {
+      company_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'parties',
+          model: 'companies',
           key: 'id'
         }
       },
-      address: {
-        type: Sequelize.TEXT,
+      first_name: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      landmark: {
+      last_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      age: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      primary_phone: {
         type: Sequelize.STRING
       },
-      pincode: {
-        type: Sequelize.STRING,
+      secondary_phone: {
+        type: Sequelize.STRING
+      },
+      address: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
       deleted_at: {
@@ -42,6 +57,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('party_addresses');
+    await queryInterface.dropTable('company_staffs');
   }
 };
