@@ -42,6 +42,13 @@ export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCrea
   })
   declare status: string;
 
+  //TODO : add setter 
+  @AllowNull(false)
+  @Column({
+    type: DataTypes.FLOAT
+  })
+  declare price_per_caret: number;
+
   @CreatedAt
   declare created_at: Date;
   @UpdatedAt

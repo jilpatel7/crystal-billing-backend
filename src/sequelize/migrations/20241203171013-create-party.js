@@ -38,6 +38,10 @@ module.exports = {
       logo: {
         type: Sequelize.STRING
       },
+      price_per_caret: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

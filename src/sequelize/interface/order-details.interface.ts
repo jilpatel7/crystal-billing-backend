@@ -3,6 +3,7 @@ export interface IOrderDetails {
   order_id: number;
   no_of_diamonds: number;
   total_caret: number;
+  price_per_caret: number;
   //TODO : make this as enum
   status: string;
   created_at: Date;

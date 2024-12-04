@@ -7,6 +7,7 @@ export interface IParty {
   personal_phone: string;
   office_phone: string;
   logo: string;
+  price_per_caret: number;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

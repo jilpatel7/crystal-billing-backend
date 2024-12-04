@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
+      price_per_caret: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       status: {
         type: Sequelize.STRING,
         allowNull: false,

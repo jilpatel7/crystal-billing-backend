@@ -55,6 +55,12 @@ export default class Party extends Model<IParty, IPartyCreate> implements IParty
   })
   declare logo: string;
 
+  @AllowNull(false)
+  @Column({
+    type: DataType.INTEGER
+  })
+  declare price_per_caret: number;
+
   @CreatedAt
   declare created_at: Date;
 
