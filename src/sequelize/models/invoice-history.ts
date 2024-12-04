@@ -1,6 +1,7 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, DeletedAt, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IInvoiceHistory, IInvoiceHistoryCreate } from "../interface/invoice-history.interface";
 import { DataTypes } from "sequelize";
+import Party from "./party";
 
 @Table({
   tableName: 'invoice-history',
@@ -16,7 +17,7 @@ export default class InvoiceHistory extends Model<IInvoiceHistory, IInvoiceHisto
   })
   declare id: number;
 
-  @AllowNull(false)
+  @ForeignKey(() => Party)
   @Column({
     type: DataTypes.INTEGER
   })
@@ -55,4 +56,7 @@ export default class InvoiceHistory extends Model<IInvoiceHistory, IInvoiceHisto
 
   @DeletedAt
   declare deleted_at: Date;
+
+  @BelongsTo(() => Party)
+  declare party: Party;
 }

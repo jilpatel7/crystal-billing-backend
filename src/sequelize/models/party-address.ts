@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import Party from "./party";
 import { IPartyAddress, IPartyAddressCreate } from "../interface";
 import { DataTypes } from "sequelize";
@@ -48,4 +48,8 @@ export default class PartyAddress extends Model<IPartyAddress, IPartyAddressCrea
 
   @DeletedAt
   declare deleted_at: Date;
+
+
+  @BelongsTo(() => Party)
+  declare party: Party;
 }

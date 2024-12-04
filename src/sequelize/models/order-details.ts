@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
-import { AllowNull, AutoIncrement, Column, CreatedAt, Default, DeletedAt, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BeforeCreate, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IOrderDetails, IOrderDetailsCreate } from "../interface/order-details.interface";
+import Order from "./order";
+import Party from "./party";
 
 @Table({
   tableName: 'order_details',
@@ -17,7 +19,7 @@ export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCrea
   })
   declare id: number;
 
-  @AllowNull(false)
+  @ForeignKey(() => Order)
   @Column({
     type: DataTypes.INTEGER
   })
@@ -56,4 +58,24 @@ export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCrea
   @DeletedAt
   declare deleted_at: Date;
 
+  @BelongsTo(() => Order)
+  declare order: Order;
+
+  @BeforeCreate
+  static async setDefaultPricePerCaret(orderDetails: OrderDetails) {
+    const { order_id } = orderDetails
+    if (!orderDetails.price_per_caret) {
+      const order = await Order.findByPk(order_id, {
+        include: [{
+          model: Party,
+          as: 'party'
+        }],
+      });
+      if (order && order.party) {
+        orderDetails.price_per_caret = order.party.price_per_caret;
+      } else {
+        throw new Error("Party not found for the given order.");
+      }
+    }
+  }
 }

@@ -1,3 +1,7 @@
+import { ICompanyStaff } from "./company-staff.interface";
+import { IOrder } from "./order.interface";
+import { IParty } from "./parties.interface";
+
 export interface ICompany {
   id: number;
   gstin_no: string;
@@ -10,5 +14,10 @@ export interface ICompany {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+
+  parties: IParty[];
+  company_staffs: ICompanyStaff[];
+  orders: IOrder[];
+  parties_with_orders: IParty[];
 }
 export interface ICompanyCreate extends Omit<ICompany, 'id' | 'personal_phone' | 'created_at' | 'updated_at' | 'deleted_at'> { }

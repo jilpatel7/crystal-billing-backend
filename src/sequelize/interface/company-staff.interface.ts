@@ -1,3 +1,5 @@
+import { ICompany } from "./companies.interface";
+
 export interface ICompanyStaff {
   id: number;
   company_id: number;
@@ -11,5 +13,7 @@ export interface ICompanyStaff {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+
+  company: ICompany;
 }
 export interface ICompanyStaffCreate extends Omit<ICompanyStaff, 'id' | 'secondary_phone' | 'created_at' | 'updated_at' | 'deleted_at'> { }

@@ -1,6 +1,9 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, DeletedAt, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DeletedAt, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { ICompany, ICompanyCreate } from "../interface";
 import { DataTypes } from "sequelize";
+import Party from "./party";
+import CompanyStaff from "./company-staff";
+import Order from "./order";
 
 @Table({
   tableName: 'companies',
@@ -64,4 +67,17 @@ export default class Company extends Model<ICompany, ICompanyCreate> implements 
 
   @DeletedAt
   declare deleted_at: Date;
+
+
+  @HasMany(() => Party)
+  declare parties: Party[];
+
+  @HasMany(() => CompanyStaff)
+  declare company_staffs: CompanyStaff[];
+
+  @HasMany(() => Order)
+  declare orders: Order[];
+
+  @BelongsToMany(() => Party, () => Order, 'company_id', 'party_id')
+  declare parties_with_orders: Party[];
 }

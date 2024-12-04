@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { ICompanyStaff, ICompanyStaffCreate } from "../interface";
 import Company from "./company";
 import { DataTypes } from "sequelize";
@@ -73,4 +73,8 @@ export default class CompanyStaff extends Model<ICompanyStaff, ICompanyStaffCrea
 
   @DeletedAt
   declare deleted_at: Date;
+
+
+  @BelongsTo(() => Company)
+  declare company: Company;
 }

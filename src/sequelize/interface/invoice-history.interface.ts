@@ -1,3 +1,5 @@
+import { IParty } from "./parties.interface";
+
 export interface IInvoiceHistory {
   id: number;
   party_id: number;
@@ -8,5 +10,7 @@ export interface IInvoiceHistory {
   created_at: Date
   updated_at: Date
   deleted_at: Date
+
+  party: IParty;
 }
 export interface IInvoiceHistoryCreate extends Omit<IInvoiceHistory, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> { }

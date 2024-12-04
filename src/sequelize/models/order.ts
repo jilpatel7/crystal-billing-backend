@@ -1,6 +1,9 @@
-import { AllowNull, AutoIncrement, Column, CreatedAt, Default, DeletedAt, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IOrder, IOrderCreate } from "../interface";
 import { DataTypes } from "sequelize";
+import Company from "./company";
+import Party from "./party";
+import OrderDetails from "./order-details";
 
 @Table({
   tableName: 'orders',
@@ -17,13 +20,13 @@ export default class Order extends Model<IOrder, IOrderCreate> implements IOrder
   })
   declare id: number;
 
-  @AllowNull(false)
+  @ForeignKey(() => Party)
   @Column({
     type: DataTypes.INTEGER
   })
   declare party_id: number;
 
-  @AllowNull(false)
+  @ForeignKey(() => Company)
   @Column({
     type: DataTypes.INTEGER
   })
@@ -68,4 +71,13 @@ export default class Order extends Model<IOrder, IOrderCreate> implements IOrder
   @DeletedAt
   declare deleted_at: Date;
 
+
+  @BelongsTo(() => Company)
+  declare company: Company;
+
+  @BelongsTo(() => Party)
+  declare party: Party;
+
+  @HasMany(() => OrderDetails)
+  declare order_details: OrderDetails[];
 }

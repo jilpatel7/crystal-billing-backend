@@ -1,3 +1,7 @@
+import { ICompany } from "./companies.interface";
+import { IOrder } from "./order.interface";
+import { IPartyAddress } from "./party-address.interface";
+
 export interface IParty {
   id: number;
   gstin_no: string;
@@ -11,5 +15,10 @@ export interface IParty {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+
+  company: ICompany;
+  party_addresses: IPartyAddress[];
+  orders: IOrder[];
+  companies_with_orders: ICompany[]
 }
 export interface IPartyCreate extends Omit<IParty, 'id' | 'personal_phone' | 'email' | 'created_at' | 'updated_at' | 'deleted_at' | 'logo'> { }
