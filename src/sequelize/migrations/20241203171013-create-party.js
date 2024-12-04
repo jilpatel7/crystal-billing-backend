@@ -11,7 +11,6 @@ module.exports = {
       },
       gstin_no: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       company_id: {
         type: Sequelize.INTEGER,
