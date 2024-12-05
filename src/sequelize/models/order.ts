@@ -1,16 +1,17 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IOrder, IOrderCreate } from "../interface";
+import { IOrder } from "../interface";
 import { DataTypes } from "sequelize";
 import Company from "./company";
 import Party from "./party";
 import OrderDetails from "./order-details";
+import { IOrderStatus } from "../interface/order-details.interface";
 
 @Table({
   tableName: 'orders',
   timestamps: true,
   paranoid: true,
 })
-export default class Order extends Model<IOrder, IOrderCreate> implements IOrder {
+export default class Order extends Model<IOrder> {
 
   @PrimaryKey
   @AutoIncrement
@@ -63,7 +64,7 @@ export default class Order extends Model<IOrder, IOrderCreate> implements IOrder
   @Column({
     type: DataTypes.STRING
   })
-  declare status: string;
+  declare status: IOrderStatus;
   @CreatedAt
   declare created_at: Date;
   @UpdatedAt

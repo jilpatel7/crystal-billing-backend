@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IParty, IPartyCreate } from "../interface";
+import { IParty } from "../interface";
 import Company from "./company";
 import PartyAddress from "./party-address";
 import Order from "./order";
@@ -10,7 +10,7 @@ import InvoiceHistory from "./invoice-history";
   timestamps: true,
   paranoid: true,
 })
-export default class Party extends Model<IParty, IPartyCreate> implements IParty {
+export default class Party extends Model<IParty> {
   @PrimaryKey
   @AutoIncrement
   @AllowNull(false)

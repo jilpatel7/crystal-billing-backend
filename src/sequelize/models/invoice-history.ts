@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IInvoiceHistory, IInvoiceHistoryCreate } from "../interface/invoice-history.interface";
+import { IInvoiceHistory } from "../interface/invoice-history.interface";
 import { DataTypes } from "sequelize";
 import Party from "./party";
 
@@ -8,7 +8,7 @@ import Party from "./party";
   timestamps: true,
   paranoid: true,
 })
-export default class InvoiceHistory extends Model<IInvoiceHistory, IInvoiceHistoryCreate> implements IInvoiceHistory {
+export default class InvoiceHistory extends Model<IInvoiceHistory> {
   @PrimaryKey
   @AutoIncrement
   @AllowNull(false)

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { AllowNull, AutoIncrement, BeforeCreate, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IOrderDetails, IOrderDetailsCreate } from "../interface/order-details.interface";
+import { AllowNull, AutoIncrement, BeforeCreate, BeforeValidate, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { IOrderDetails, IOrderStatus } from "../interface/order-details.interface";
 import Order from "./order";
 import Party from "./party";
 
@@ -9,7 +9,7 @@ import Party from "./party";
   timestamps: true,
   paranoid: true,
 })
-export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCreate> implements IOrderDetails {
+export default class OrderDetails extends Model<IOrderDetails> {
 
   @PrimaryKey
   @AutoIncrement
@@ -42,9 +42,8 @@ export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCrea
   @Column({
     type: DataTypes.STRING
   })
-  declare status: string;
+  declare status: IOrderStatus;
 
-  //TODO : add setter 
   @AllowNull(false)
   @Column({
     type: DataTypes.FLOAT
@@ -61,14 +60,14 @@ export default class OrderDetails extends Model<IOrderDetails, IOrderDetailsCrea
   @BelongsTo(() => Order)
   declare order: Order;
 
-  @BeforeCreate
+  @BeforeValidate
   static async setDefaultPricePerCaret(orderDetails: OrderDetails) {
-    const { order_id } = orderDetails
+    const { order_id } = orderDetails;
     if (!orderDetails.price_per_caret) {
       const order = await Order.findByPk(order_id, {
         include: [{
           model: Party,
-          as: 'party'
+          as: 'party',
         }],
       });
       if (order && order.party) {

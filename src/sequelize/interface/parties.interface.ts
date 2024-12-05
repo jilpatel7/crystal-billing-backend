@@ -3,22 +3,21 @@ import { IOrder } from "./order.interface";
 import { IPartyAddress } from "./party-address.interface";
 
 export interface IParty {
-  id: number;
+  id?: number;
   gstin_no: string;
   company_id: number;
   name: string;
-  email: string;
-  personal_phone: string;
+  email?: string;
+  personal_phone?: string;
   office_phone: string;
-  logo: string;
+  logo?: string;
   price_per_caret: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 
-  company: ICompany;
-  party_addresses: IPartyAddress[];
-  orders: IOrder[];
-  companies_with_orders: ICompany[]
+  company?: ICompany;
+  party_addresses?: IPartyAddress[];
+  orders?: IOrder[];
+  companies_with_orders?: ICompany[]
 }
-export interface IPartyCreate extends Omit<IParty, 'id' | 'personal_phone' | 'email' | 'created_at' | 'updated_at' | 'deleted_at' | 'logo'> { }

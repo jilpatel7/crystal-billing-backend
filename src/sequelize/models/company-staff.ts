@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { ICompanyStaff, ICompanyStaffCreate } from "../interface";
+import { ICompanyStaff } from "../interface";
 import Company from "./company";
 import { DataTypes } from "sequelize";
 
@@ -8,7 +8,7 @@ import { DataTypes } from "sequelize";
   timestamps: true,
   paranoid: true,
 })
-export default class CompanyStaff extends Model<ICompanyStaff, ICompanyStaffCreate> {
+export default class CompanyStaff extends Model<ICompanyStaff> {
   @PrimaryKey
   @AutoIncrement
   @AllowNull(false)

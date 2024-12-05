@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import Party from "./party";
-import { IPartyAddress, IPartyAddressCreate } from "../interface";
+import { IPartyAddress } from "../interface";
 import { DataTypes } from "sequelize";
 
 @Table({
@@ -8,7 +8,7 @@ import { DataTypes } from "sequelize";
   timestamps: true,
   paranoid: true,
 })
-export default class PartyAddress extends Model<IPartyAddress, IPartyAddressCreate> implements IPartyAddress {
+export default class PartyAddress extends Model<IPartyAddress> {
   @PrimaryKey
   @AutoIncrement
   @AllowNull(false)
