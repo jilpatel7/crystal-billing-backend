@@ -4,13 +4,13 @@ import { IParty } from "./parties.interface";
 
 export interface ICompany {
   id?: number;
-  gstin_no: string;
+  gstin_no?: string;
   name: string;
   email: string;
   password: string;
   personal_phone?: string;
   office_phone: string;
-  otp: string;
+  otp?: string;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;

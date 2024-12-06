@@ -73,7 +73,7 @@ export default class OrderDetails extends Model<IOrderDetails> {
       if (order && order.party) {
         orderDetails.price_per_caret = order.party.price_per_caret;
       } else {
-        throw new Error("Party not found for the given order.");
+        console.log("Party not found for the given order.");
       }
     }
   }

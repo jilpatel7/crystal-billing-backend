@@ -1,9 +1,10 @@
-import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DeletedAt, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BeforeCreate, BelongsToMany, Column, CreatedAt, DeletedAt, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { ICompany } from "../interface";
 import { DataTypes } from "sequelize";
 import Party from "./party";
 import CompanyStaff from "./company-staff";
 import Order from "./order";
+import * as argon2 from "argon2";
 
 @Table({
   tableName: 'companies',
@@ -19,8 +20,6 @@ export default class Company extends Model<ICompany> {
   })
   declare id: number;
 
-
-  @AllowNull(false)
   @Column({
     type: DataTypes.STRING
   })
@@ -80,4 +79,16 @@ export default class Company extends Model<ICompany> {
 
   @BelongsToMany(() => Party, () => Order, 'company_id', 'party_id')
   declare parties_with_orders: Party[];
+
+  // @BeforeCreate
+  // static async hashPassword(company: Company) {
+  //   const { password } = company;
+  //   try {
+  //     const hashPassword = await argon2.hash(password);
+  //     console.log(hashPassword);
+  //     company.password = hashPassword;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 }
