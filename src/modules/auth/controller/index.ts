@@ -45,3 +45,36 @@ export const loginCompany = async (req: Request, res: Response) => {
     })
   }
 };
+export const isLoggedInCompany = async (req: Request, res: Response) => {
+  try {
+    const id = req.user
+    const company = await Company.findOne({
+      where: {
+        id: id
+      }
+    })
+    if (!company) {
+      return generalResponse({
+        message: AUTH_RESPONSE.COMPANY_NOT_FOUND,
+        response: res,
+        statusCode: 404,
+        response_type: 'failure'
+      })
+    }
+    return generalResponse({
+      data: company,
+      response: res,
+      message: AUTH_RESPONSE.LOGIN_SUCCESS,
+      response_type: 'success',
+      statusCode: 200
+    })
+  } catch (error) {
+    console.log(error);
+    return generalResponse({
+      message: AUTH_RESPONSE.LOGIN_FAILURE,
+      response: res,
+      statusCode: 500,
+      response_type: 'failure'
+    })
+  }
+}
