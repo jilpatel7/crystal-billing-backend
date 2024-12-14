@@ -11,7 +11,11 @@ module.exports = {
       },
       party_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          key: 'id',
+          model: 'parties'
+        }
       },
       start_date: {
         allowNull: false,

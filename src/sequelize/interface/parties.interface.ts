@@ -4,7 +4,7 @@ import { IPartyAddress } from "./party-address.interface";
 
 export interface IParty {
   id?: number;
-  gstin_no: string;
+  gstin_no?: string;
   company_id: number;
   name: string;
   email?: string;

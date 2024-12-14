@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { ObjectSchema } from "joi";
+import Joi, { ObjectSchema } from "joi";
 import generalResponse from "../helper";
 import { JWT_SECRET } from "../config";
 import { Strategy } from "passport-jwt";
 import passport from "passport";
 
-export const validationMiddleware = (schema: ObjectSchema) => {
+export const validationMiddleware = (schema: ObjectSchema, context?: Joi.Context) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
+    const { error } = schema.validate(req.body, { abortEarly: false, context },);
     if (error) {
       return generalResponse({
         response: res,
