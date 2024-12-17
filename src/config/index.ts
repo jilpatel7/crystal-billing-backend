@@ -23,6 +23,7 @@ export const {
   DB_DIALECT,
   DATABASE,
   DB_LOGGING,
+  FRONT_URL,
 }: IEnvVariables = {
   PORT: getEnvVariable("PORT", "8080"),
   JWT_SECRET: getEnvVariable("JWT_SECRET"),
@@ -33,4 +34,5 @@ export const {
   DB_DIALECT: getEnvVariable("DB_DIALECT"),
   DATABASE: getEnvVariable("DATABASE"),
   DB_LOGGING: getEnvVariable("DB_LOGGING", false),
+  FRONT_URL: getEnvVariable("FRONT_URL", "http://localhost:5173"),
 };

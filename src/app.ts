@@ -1,13 +1,16 @@
 import express, { Application } from "express";
 import cors from "cors";
 import db from "./sequelize/models";
-import { PORT } from "./config";
+import { FRONT_URL, PORT } from "./config";
 import router from "./router";
 import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
-app.use(cors());
+app.use(cors({
+  origin: FRONT_URL,
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
