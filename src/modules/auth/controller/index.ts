@@ -35,6 +35,12 @@ export const loginCompany = async (req: Request, res: Response) => {
         statusCode: 200
       })
     }
+    return generalResponse({
+      response: res,
+      message: AUTH_RESPONSE.INVALID_PASSWORD,
+      response_type: 'failure',
+      statusCode: 401
+    })
   } catch (error) {
     console.log(error);
     return generalResponse({
