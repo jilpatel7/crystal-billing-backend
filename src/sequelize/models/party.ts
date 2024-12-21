@@ -19,7 +19,6 @@ export default class Party extends Model<IParty> {
   })
   declare id: number;
 
-  @AllowNull(false)
   @Column({
     type: DataType.STRING
   })
