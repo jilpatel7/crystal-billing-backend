@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import generalResponse from '../../../helper';
 import { PARTY_RESPONSE } from '../enum';
 import Party from '../../../sequelize/models/party';
+import { Op } from 'sequelize';
 
 export const createParty = async (req: Request, res: Response) => {
   try {
@@ -110,6 +111,34 @@ export const getParty = async (req: Request, res: Response) => {
         response_type: "failure"
       })
     }
+    return generalResponse({
+      message: PARTY_RESPONSE.PARTY_FETCH_SUCCESS,
+      response: res,
+      data: party,
+    })
+  } catch (error) {
+    console.log(error);
+    return generalResponse({
+      message: PARTY_RESPONSE.PARTY_FAILURE,
+      response: res,
+      statusCode: 500,
+      response_type: 'failure',
+    });
+  }
+};
+export const getAllParty = async (req: Request, res: Response) => {
+  try {
+    const company_id = +(req.user || 0);
+    const { limit, offset, search = '' } = req.body;
+    const party = await Party.findAll({
+      attributes: ['name', 'email', 'personal_phone', 'office_phone', 'price_per_caret',],
+      where: {
+        company_id,
+        name: { [Op.like]: `%${search.toLowerCase()}%` }
+      },
+      limit,
+      offset,
+    })
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_FETCH_SUCCESS,
       response: res,
