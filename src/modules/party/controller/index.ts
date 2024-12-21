@@ -129,8 +129,8 @@ export const getParty = async (req: Request, res: Response) => {
 export const getAllParty = async (req: Request, res: Response) => {
   try {
     const company_id = +(req.user || 0);
-    const { limit, offset, search = '' } = req.body;
-    const party = await Party.findAll({
+    const { limit = 10, offset = 0, search = '', columnToOrder = 'id', orderBy = 'desc' } = req.body;
+    const party = await Party.findAndCountAll({
       attributes: ['name', 'email', 'personal_phone', 'office_phone', 'price_per_caret',],
       where: {
         company_id,
@@ -138,6 +138,7 @@ export const getAllParty = async (req: Request, res: Response) => {
       },
       limit,
       offset,
+      order: [[columnToOrder || 'id', orderBy || 'desc']]
     })
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_FETCH_SUCCESS,
