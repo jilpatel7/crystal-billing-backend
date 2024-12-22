@@ -131,7 +131,7 @@ export const getAllParty = async (req: Request, res: Response) => {
     const company_id = +(req.user || 0);
     const { limit = 10, offset = 0, search = '', columnToOrder = 'id', orderBy = 'desc' } = req.body;
     const party = await Party.findAndCountAll({
-      attributes: ['name', 'email', 'personal_phone', 'office_phone', 'price_per_caret',],
+      attributes: ['id','name', 'email', 'personal_phone', 'office_phone', 'price_per_caret',],
       where: {
         company_id,
         name: { [Op.like]: `%${search.toLowerCase()}%` }

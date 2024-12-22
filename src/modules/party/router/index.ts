@@ -10,6 +10,6 @@ partyRouter.post(`${PARTY}/create`, passport.authenticate("jwt", { session: fals
 partyRouter.put(`${PARTY}/update`, passport.authenticate("jwt", { session: false }), validationMiddleware(partySchema, { isUpdate: true }), updateParty);
 partyRouter.post(`${PARTY}/get`, passport.authenticate("jwt", { session: false }), validationMiddleware(idSchema), getParty);
 partyRouter.post(`${PARTY}/get/all`, passport.authenticate("jwt", { session: false }), getAllParty);
-partyRouter.delete(`${PARTY}/delete`, passport.authenticate("jwt", { session: false }), validationMiddleware(idSchema), deleteParty);
+partyRouter.post(`${PARTY}/delete`, passport.authenticate("jwt", { session: false }), validationMiddleware(idSchema), deleteParty);
 
 export default partyRouter;
