@@ -3,6 +3,7 @@ import generalResponse from '../../../helper';
 import { PARTY_RESPONSE } from '../enum';
 import Party from '../../../sequelize/models/party';
 import { Op } from 'sequelize';
+import _ from 'lodash';
 
 export const createParty = async (req: Request, res: Response) => {
   try {
@@ -18,10 +19,11 @@ export const createParty = async (req: Request, res: Response) => {
       logo,
       personal_phone,
     });
+    const data = JSON.parse(JSON.stringify(result));
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_CREATED,
       response: res,
-      data: result,
+      data: _.omit(data, ['company_id', 'created_at', 'updated_at']),
     })
   } catch (error) {
     console.log(error);
@@ -131,7 +133,7 @@ export const getAllParty = async (req: Request, res: Response) => {
     const company_id = +(req.user || 0);
     const { limit = 10, offset = 0, search = '', columnToOrder = 'id', orderBy = 'desc' } = req.body;
     const party = await Party.findAndCountAll({
-      attributes: ['id','name', 'email', 'personal_phone', 'office_phone', 'price_per_caret',],
+      attributes: ['id', 'name', 'email', 'gstin_no', 'office_phone', 'personal_phone', 'price_per_caret'],
       where: {
         company_id,
         name: { [Op.like]: `%${search.toLowerCase()}%` }
