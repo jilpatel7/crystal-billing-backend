@@ -34,7 +34,13 @@ export const createOrder = async (req: Request, res: Response) => {
       received_at: received_at,
       status: IOrderStatus.PENDING,
       order_details: order_details
-    }, {include: OrderDetails});
+    }, {
+      include: [
+        {
+          model: OrderDetails
+        },
+      ],
+    });
     
     const data = JSON.parse(JSON.stringify(result));
     return generalResponse({
