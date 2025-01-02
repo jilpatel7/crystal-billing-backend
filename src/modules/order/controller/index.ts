@@ -9,23 +9,8 @@ import OrderDetails from "../../../sequelize/models/order-details";
 export const createOrder = async (req: Request, res: Response) => {
   try {
     const company_id = +(req.user || 0);
-    const { party_id, no_of_lots, jagad_no, received_at, order_details } = req.body();
-    // const result = await Order.create({
-    //   party_id: 1,
-    //   company_id: company_id,
-    //   no_of_lots: 5,
-    //   jagad_no: "222",
-    //   received_at: new Date(),
-    //   status: IOrderStatus.PENDING,
-    //   order_details: [
-    //     {
-    //       no_of_diamonds: 55,
-    //       total_caret: 25,
-    //       price_per_caret: 33,
-    //       status: IOrderStatus.PENDING
-    //     }
-    //   ]
-    // })
+    const { party_id, no_of_lots, jagad_no, received_at, order_details } = req.body;
+    
     const result = await Order.create({
       party_id: party_id,
       company_id: company_id,
