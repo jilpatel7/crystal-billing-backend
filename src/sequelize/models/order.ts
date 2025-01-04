@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BeforeDestroy, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IOrder } from "../interface";
 import { DataTypes } from "sequelize";
 import Company from "./company";
@@ -81,4 +81,20 @@ export default class Order extends Model<IOrder> {
 
   @HasMany(() => OrderDetails)
   declare order_details: OrderDetails[];
+  
+  @BeforeDestroy
+    static async deleteOrderDetails(order: Order) {
+      console.log(`Order ${order.id} is being destroyed`);
+      try {
+        await OrderDetails.update(
+          { 
+            deleted_at: new Date()
+          },
+          { where: { order_id: order.id } }
+        );      
+        console.log("Associated order details marked as deleted");
+      } catch (error) {
+        console.error("Error in deleting order details:", error);
+      }
+    } 
 }

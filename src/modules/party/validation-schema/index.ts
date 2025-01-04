@@ -13,4 +13,4 @@ export const partySchema = Joi.object({
 
 export const idSchema = Joi.object({
   id: Joi.number().required()
-})
+});

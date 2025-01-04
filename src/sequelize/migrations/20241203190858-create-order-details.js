@@ -7,47 +7,49 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'orders',
-          key: 'id'
-        }
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       no_of_diamonds: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       total_caret: {
         type: Sequelize.FLOAT,
-        allowNull: false
+        allowNull: false,
       },
       price_per_caret: {
         type: Sequelize.FLOAT,
-        allowNull: false
+        allowNull: false,
       },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 'pending'
+        defaultValue: 'pending',
       },
       deleted_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('order_details');
-  }
+  },
 };
