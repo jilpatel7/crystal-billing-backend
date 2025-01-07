@@ -17,7 +17,7 @@ export interface IParty {
   deleted_at?: Date;
 
   company?: ICompany;
-  party_addresses?: IPartyAddress[];
+  party_addresses?: IPartyAddress;
   orders?: IOrder[];
   companies_with_orders?: ICompany[]
 }

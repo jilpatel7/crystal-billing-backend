@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, ForeignKey, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BeforeDestroy, BeforeUpdate, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, ForeignKey, HasMany, HasOne, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IParty } from "../interface";
 import Company from "./company";
 import PartyAddress from "./party-address";
@@ -75,8 +75,8 @@ export default class Party extends Model<IParty> {
   @BelongsTo(() => Company)
   declare company: Company
 
-  @HasMany(() => PartyAddress)
-  declare party_addresses: PartyAddress[];
+  @HasOne(() => PartyAddress)
+  declare party_addresses: PartyAddress;
 
   @HasMany(() => Order)
   declare orders: Order[];
@@ -86,4 +86,11 @@ export default class Party extends Model<IParty> {
 
   @HasMany(() => InvoiceHistory)
   declare party_invoice_histories: InvoiceHistory[];
+
+  @BeforeDestroy
+  static async deleteAssociatedAddresses(instance: Party) {
+    await PartyAddress.destroy({
+      where: { party_id: instance.id },
+    });
+  }
 }  
