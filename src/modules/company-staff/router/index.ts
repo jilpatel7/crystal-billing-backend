@@ -5,6 +5,7 @@ import {
   createCompanyStaff,
   deleteCompanyStaff,
   getAllCompanyStaff,
+  getAllCompanyStaffIdsAndNames,
   getCompanyStaff,
   updateCompanyStaff,
 } from '../controller';
@@ -30,10 +31,15 @@ companyStaffRouter.post(
   validationMiddleware(idSchema),
   getCompanyStaff
 );
-companyStaffRouter.post(
+companyStaffRouter.get(
   `${COMPANY_STAFF}/get/all`,
   passport.authenticate('jwt', { session: false }),
   getAllCompanyStaff
+);
+companyStaffRouter.get(
+  `${COMPANY_STAFF}/get/allIdsAndNames`,
+  passport.authenticate('jwt', { session: false }),
+  getAllCompanyStaffIdsAndNames
 );
 companyStaffRouter.post(
   `${COMPANY_STAFF}/delete`,

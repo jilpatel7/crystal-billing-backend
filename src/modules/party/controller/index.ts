@@ -185,15 +185,21 @@ export const getParty = async (req: Request, res: Response) => {
 };
 export const getAllParty = async (req: Request, res: Response) => {
   try {
+    let { sort = 'id', order = 'DESC', page = 1, limit = 10, search = '' } = req.query;
     const company_id = +(req.user || 0);
-    const {
-      limit = 10,
-      offset = 0,
-      search = '',
-      columnToOrder = 'id',
-      orderBy = 'desc',
-    } = req.body;
+
+    page = +page;
+    limit = +limit;
+
+    const offset = (page - 1) * limit;
+
     const party = await Party.findAndCountAll({
+      include: [
+        {
+          model: PartyAddress,
+          attributes: ['id', 'party_id', 'address', 'landmark', 'pincode'],
+        },
+      ],
       attributes: [
         'id',
         'name',
@@ -202,21 +208,52 @@ export const getAllParty = async (req: Request, res: Response) => {
         'office_phone',
         'personal_phone',
         'price_per_caret',
+        'logo',
+        'created_at',
+        'updated_at',
       ],
       where: {
         company_id,
-        name: { [Op.like]: `%${search.toLowerCase()}%` },
+        name: { [Op.like]: `%${(search as string).toLowerCase()}%` },
       },
-      limit,
-      offset,
-      order: [[columnToOrder || 'id', orderBy || 'desc']],
-      include: [
-        {
-          model: PartyAddress,
-          attributes: ['id', 'party_id', 'address', 'landmark', 'pincode'],
-        },
-      ],
+      order: [[sort as string, order as "ASC" | "DESC"]],
+      limit: limit,
+      offset: offset
     });
+
+    const responseData = {
+      totalRecords: party.count, // Total number of records
+      totalPages: Math.ceil(party.count / limit), // Total pages
+      currentPage: page, // Current page
+      data: party.rows, // Paginated data
+    };
+
+    return generalResponse({
+      message: PARTY_RESPONSE.PARTY_FETCH_SUCCESS,
+      response: res,
+      data: responseData,
+    });
+  } catch (error) {
+    console.log(error);
+    return generalResponse({
+      message: PARTY_RESPONSE.PARTY_FAILURE,
+      response: res,
+      statusCode: 500,
+      response_type: 'failure',
+    });
+  }
+};
+
+export const getAllPartyIdsAndNames = async (req: Request, res: Response) => {
+  try {
+    const company_id = +(req.user || 0);
+    const party = await Party.findAll({
+      attributes: ['id', 'name'],
+      where: {
+        company_id,
+      },
+    });
+
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_FETCH_SUCCESS,
       response: res,

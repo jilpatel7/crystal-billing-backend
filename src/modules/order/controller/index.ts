@@ -5,21 +5,21 @@ import { IOrderStatus } from "../../../sequelize/interface/order-details.interfa
 import Order from "../../../sequelize/models/order";
 import _, { sortBy } from "lodash";
 import OrderDetails from "../../../sequelize/models/order-details";
-import { Op, Sequelize, where } from "sequelize";
+import { FindAndCountOptions, Op, Sequelize, where } from "sequelize";
 import Party from "../../../sequelize/models/party";
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
-    const company_id = +(req.user || 0);
-    const { party_id, no_of_lots, jagad_no, received_at, order_details } = req.body;
+    const company_id = +(req.user || 1);
+    const { party_id, jagad_no, received_at, order_details, status } = req.body;
     
     const result = await Order.create({
       party_id: party_id,
       company_id: company_id,
-      no_of_lots: no_of_lots,
+      no_of_lots: order_details.length,
       jagad_no: jagad_no,
       received_at: received_at,
-      status: IOrderStatus.PENDING,
+      status: status,
       order_details: order_details
     }, {
       include: [
@@ -162,10 +162,11 @@ export const getAllOrders = async (req: Request, res: Response) => {
       page = 1,            
       limit = 10,          
       search = "",
+      status,
       dateFrom,
       dateTo,
     } = req.query;
-    
+
     const company_id = +(req.user || 0);
 
     page = +page;
@@ -173,7 +174,9 @@ export const getAllOrders = async (req: Request, res: Response) => {
 
     const offset = (page - 1) * limit;
 
-    const options: any = {
+    const options: FindAndCountOptions = {
+      distinct: true,
+      col: 'id',
       include: [
         { model: OrderDetails, required: true },
         {
@@ -183,6 +186,7 @@ export const getAllOrders = async (req: Request, res: Response) => {
       ],
       where: {
         company_id: company_id,
+        ...(status && { status }),
         [Op.and]: [
           dateFrom && dateTo
             ? { received_at: { [Op.between]: [dateFrom, dateTo] } }
@@ -201,10 +205,10 @@ export const getAllOrders = async (req: Request, res: Response) => {
             },
           },
         ],
-      },
+      } as any,
       order: [[sort as string, order as "ASC" | "DESC"]],
       limit: limit,
-      offset: offset,
+      offset: offset
     };
 
     const data = await Order.findAndCountAll(options);
