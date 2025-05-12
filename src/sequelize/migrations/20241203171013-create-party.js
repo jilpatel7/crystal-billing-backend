@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       gstin_no: {
         type: Sequelize.STRING,
@@ -17,8 +17,8 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'companies',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       name: {
         type: Sequelize.STRING,
@@ -28,33 +28,29 @@ module.exports = {
         type: Sequelize.STRING,
       },
       personal_phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       office_phone: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       logo: {
-        type: Sequelize.STRING
-      },
-      price_per_caret: {
-        type: Sequelize.FLOAT,
-        allowNull: false
+        type: Sequelize.STRING,
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       deleted_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('parties');
-  }
+  },
 };

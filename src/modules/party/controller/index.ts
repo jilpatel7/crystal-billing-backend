@@ -18,7 +18,6 @@ export const createParty = async (req: Request, res: Response) => {
       personal_phone,
       office_phone,
       logo,
-      price_per_caret,
       party_addresses,
     } = req.body;
     const result = await Party.create(
@@ -26,7 +25,6 @@ export const createParty = async (req: Request, res: Response) => {
         company_id,
         name,
         office_phone,
-        price_per_caret,
         email,
         gstin_no,
         logo,
@@ -63,7 +61,6 @@ export const updateParty = async (req: Request, res: Response) => {
       personal_phone,
       office_phone,
       logo,
-      price_per_caret,
       party_addresses: { id: addressId, address, landmark, pincode, party_id },
     } = req.body;
     const party = await Party.findByPk(id);
@@ -83,7 +80,6 @@ export const updateParty = async (req: Request, res: Response) => {
         office_phone,
         name,
         personal_phone,
-        price_per_caret,
       },
       {
         where: {
@@ -207,7 +203,6 @@ export const getAllParty = async (req: Request, res: Response) => {
         'gstin_no',
         'office_phone',
         'personal_phone',
-        'price_per_caret',
         'logo',
         'created_at',
         'updated_at',

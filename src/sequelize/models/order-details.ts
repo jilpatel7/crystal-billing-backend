@@ -59,22 +59,4 @@ export default class OrderDetails extends Model<IOrderDetails> {
 
   @BelongsTo(() => Order)
   declare order: Order;
-
-  @BeforeValidate
-  static async setDefaultPricePerCaret(orderDetails: OrderDetails) {
-    const { order_id } = orderDetails;
-    if (!orderDetails.price_per_caret) {
-      const order = await Order.findByPk(order_id, {
-        include: [{
-          model: Party,
-          as: 'party',
-        }],
-      });
-      if (order && order.party) {
-        orderDetails.price_per_caret = order.party.price_per_caret;
-      } else {
-        console.log("Party not found for the given order.");
-      }
-    }
-  }
 }

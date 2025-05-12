@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, BeforeDestroy, BeforeUpdate, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, ForeignKey, HasMany, HasOne, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BeforeDestroy, BeforeUpdate, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, Default, DeletedAt, ForeignKey, HasMany, HasOne, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { IParty } from "../interface";
 import Company from "./company";
 import PartyAddress from "./party-address";
@@ -57,12 +57,6 @@ export default class Party extends Model<IParty> {
   })
   declare logo: string;
 
-  @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER
-  })
-  declare price_per_caret: number;
-
   @CreatedAt
   declare created_at: Date;
 
@@ -75,8 +69,8 @@ export default class Party extends Model<IParty> {
   @BelongsTo(() => Company)
   declare company: Company
 
-  @HasOne(() => PartyAddress)
-  declare party_addresses: PartyAddress;
+  @HasMany(() => PartyAddress)
+  declare party_addresses: PartyAddress[];
 
   @HasMany(() => Order)
   declare orders: Order[];
