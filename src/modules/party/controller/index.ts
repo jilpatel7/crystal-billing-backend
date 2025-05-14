@@ -61,8 +61,10 @@ export const updateParty = async (req: Request, res: Response) => {
       personal_phone,
       office_phone,
       logo,
-      party_addresses: { id: addressId, address, landmark, pincode, party_id },
+      party_addresses = [],
+      removed_address_ids = [],
     } = req.body;
+
     const party = await Party.findByPk(id);
     if (!party) {
       return generalResponse({
@@ -72,7 +74,9 @@ export const updateParty = async (req: Request, res: Response) => {
         response_type: 'failure',
       });
     }
-    const result = await Party.update(
+
+    // Update Party details
+    await Party.update(
       {
         email,
         gstin_no,
@@ -82,37 +86,66 @@ export const updateParty = async (req: Request, res: Response) => {
         personal_phone,
       },
       {
-        where: {
-          id,
-          company_id,
-        },
+        where: { id, company_id },
         transaction,
       }
     );
-    const partyAddress = await PartyAddress.update(
-      {
-        address,
-        landmark,
-        pincode,
-        party_id,
-      },
-      {
+
+    // Loop through party_addresses
+    for (const addr of party_addresses) {
+      const { id: addressId, address, landmark, pincode } = addr;
+
+      if (addressId) {
+        // Update existing address
+        await PartyAddress.update(
+          {
+            address,
+            landmark,
+            pincode,
+          },
+          {
+            where: {
+              id: addressId,
+              party_id: id,
+            },
+            transaction,
+          }
+        );
+      } else {
+        // Create new address
+        await PartyAddress.create(
+          {
+            party_id: id,
+            address,
+            landmark,
+            pincode,
+          },
+          { transaction }
+        );
+      }
+    }
+
+    // Delete addresses by ID
+    if (Array.isArray(removed_address_ids) && removed_address_ids.length > 0) {
+      await PartyAddress.destroy({
         where: {
-          id: addressId,
-          party_id,
+          id: removed_address_ids,
+          party_id: id,
         },
         transaction,
-      }
-    );
+      });
+    }
+
     await transaction.commit();
+
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_UPDATED,
       response: res,
-      data: result,
+      data: null,
     });
   } catch (error) {
     await transaction.rollback();
-    console.log(error);
+    console.error(error);
     return generalResponse({
       message: PARTY_RESPONSE.PARTY_FAILURE,
       response: res,
@@ -121,6 +154,7 @@ export const updateParty = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const deleteParty = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
@@ -154,8 +188,15 @@ export const deleteParty = async (req: Request, res: Response) => {
 };
 export const getParty = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body;
-    const party = await Party.findByPk(id);
+    const { id } = req.query;
+    const party = await Party.findByPk(Number(id), {
+      include: [
+        {
+          model: PartyAddress,
+          attributes: ['id', 'party_id', 'address', 'landmark', 'pincode'],
+        },
+      ],
+    });
     if (!party) {
       return generalResponse({
         message: PARTY_RESPONSE.PARTY_NOT_FOUND,

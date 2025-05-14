@@ -116,8 +116,8 @@ export const deleteCompanyStaff = async (req: Request, res: Response) => {
 };
 export const getCompanyStaff = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body;
-    const party = await CompanyStaff.findByPk(id);
+    const { id } = req.query;
+    const party = await CompanyStaff.findByPk(Number(id));
     if (!party) {
       return generalResponse({
         message: COMPANY_STAFF_RESPONSE.COMPANY_STAFF_NOT_FOUND,

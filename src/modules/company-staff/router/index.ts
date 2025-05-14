@@ -25,10 +25,9 @@ companyStaffRouter.put(
   validationMiddleware(companyStaffSchema, { isUpdate: true }),
   updateCompanyStaff
 );
-companyStaffRouter.post(
+companyStaffRouter.get(
   `${COMPANY_STAFF}/get`,
   passport.authenticate('jwt', { session: false }),
-  validationMiddleware(idSchema),
   getCompanyStaff
 );
 companyStaffRouter.get(
@@ -41,7 +40,7 @@ companyStaffRouter.get(
   passport.authenticate('jwt', { session: false }),
   getAllCompanyStaffIdsAndNames
 );
-companyStaffRouter.post(
+companyStaffRouter.delete(
   `${COMPANY_STAFF}/delete`,
   passport.authenticate('jwt', { session: false }),
   validationMiddleware(idSchema),
