@@ -1,7 +1,8 @@
 import Joi from "joi";
 
-const orderDetailsSchema = Joi.object({
+export const orderDetailsSchema = Joi.object({
   id: Joi.number().optional(),
+  order_id: Joi.number().integer().optional(),
   no_of_diamonds: Joi.number().integer().min(1).required(),
   total_caret: Joi.number().positive().required(),
   price_per_caret: Joi.number().positive().required(),

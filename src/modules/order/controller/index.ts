@@ -1,6 +1,6 @@
 import { Request, response, Response } from "express";
 import generalResponse from "../../../helper";
-import { ORDER_RESPONSE } from "../enum";
+import { ORDER_LOT_RESPONSE, ORDER_RESPONSE } from "../enum";
 import { IOrderStatus } from "../../../sequelize/interface/order-details.interface";
 import Order from "../../../sequelize/models/order";
 import _, { sortBy } from "lodash";
@@ -236,4 +236,70 @@ export const getAllOrders = async (req: Request, res: Response) => {
   }
 };
 
+export const createLot = async (req: Request, res: Response) => {
+  try {
+    const lot = req.body;
+    console.log(lot);
+    const order = await Order.findByPk(lot.order_id);
+    if (!order) {
+      return generalResponse({
+        message: ORDER_RESPONSE.ORDER_NOT_FOUND,
+        response: res,
+        statusCode: 404,
+        response_type: 'failure',
+      });
+    }
 
+    const newCreatedLot = await OrderDetails.create({
+      order_id: order.id,
+      no_of_diamonds: lot.no_of_diamonds,
+      total_caret: lot.total_caret,
+      price_per_caret: lot.price_per_caret,
+      status: lot.status
+    });
+    
+    return generalResponse({
+      message: ORDER_LOT_RESPONSE.ORDER_LOT_CREATED,
+      response: res,
+      data: newCreatedLot,
+    });
+  } catch (error) {
+    console.log(error);
+    return generalResponse({
+      message: ORDER_LOT_RESPONSE.ORDER_LOT_FAILURE,
+      response: res,
+      statusCode: 500,
+      response_type: 'failure',
+    });
+  }
+};
+
+export const deleteLot = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body;
+    const lot = await OrderDetails.findByPk(id)
+    if (!lot) {
+      return generalResponse({
+        message: ORDER_LOT_RESPONSE.ORDER_LOT_NOT_FOUND,
+        response: res,
+        statusCode: 404,
+        response_type: "failure"
+      })
+    }
+    await lot.destroy();
+
+    return generalResponse({
+      message: ORDER_LOT_RESPONSE.ORDER_LOT_DELETED,
+      response: res,
+      data: null,
+    })
+  } catch (error) {
+    console.log(error);
+    return generalResponse({
+      message: ORDER_LOT_RESPONSE.ORDER_LOT_FAILURE,
+      response: res,
+      statusCode: 500,
+      response_type: 'failure',
+    }); 
+  }
+}
