@@ -6,7 +6,6 @@ export const orderDetailsSchema = Joi.object({
   no_of_diamonds: Joi.number().integer().min(1).required(),
   total_caret: Joi.number().positive().required(),
   price_per_caret: Joi.number().positive().required(),
-  isDeleted: Joi.boolean().optional(),
   status: Joi.string().optional(),
 });
 
@@ -19,4 +18,5 @@ export const orderSchema = Joi.object({
   jagad_no: Joi.string(),
   received_at: Joi.date().required(),
   order_details: Joi.array().items(orderDetailsSchema).min(1).required(),
+  removed_lot_ids: Joi.array().items(Joi.number()).optional(),
 });
