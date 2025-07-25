@@ -4,6 +4,7 @@ import {
   BelongsTo,
   Column,
   CreatedAt,
+  DeletedAt,
   ForeignKey,
   Model,
   PrimaryKey,
@@ -57,6 +58,9 @@ export default class StaffAttendance extends Model<IStaffAttendance> {
 
   @UpdatedAt
   declare updated_at: Date;
+
+  @DeletedAt
+  declare deleted_at: Date;
 
   @BelongsTo(() => CompanyStaff)
   declare staff: CompanyStaff;
