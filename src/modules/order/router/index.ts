@@ -7,7 +7,9 @@ import {
   deleteOrder,
   generateBill,
   getAllOrders,
+  getInvoiceHistory,
   getOrder,
+  updateInvoicePaid,
   updateLot,
   updateOrder,
 } from '../controller';
@@ -29,13 +31,13 @@ orderRouter.put(
   validationMiddleware(orderSchema, { isUpdate: true }),
   updateOrder
 );
-orderRouter.delete(
+orderRouter.post(
   `${ORDER}/delete`,
   passport.authenticate('jwt', { session: false }),
   validationMiddleware(idSchema),
   deleteOrder
 );
-orderRouter.get(`${ORDER}/get/all`, passport.authenticate('jwt', { session: false }), getAllOrders);
+orderRouter.post(`${ORDER}/get/all`, passport.authenticate('jwt', { session: false }), getAllOrders);
 orderRouter.get(`${ORDER}/get`, passport.authenticate('jwt', { session: false }), getOrder);
 orderRouter.post(
   `${ORDER}/lot/create`,
@@ -43,7 +45,7 @@ orderRouter.post(
   validationMiddleware(orderDetailsSchema),
   createLot
 );
-orderRouter.delete(
+orderRouter.post(
   `${ORDER}/lot/delete`,
   passport.authenticate('jwt', { session: false }),
   validationMiddleware(idSchema),
@@ -59,6 +61,16 @@ orderRouter.post(
   `${ORDER}/generate-bill`,
   passport.authenticate('jwt', { session: false }),
   generateBill
+);
+orderRouter.post(
+  `${ORDER}/invoice/list`,
+  passport.authenticate('jwt', { session: false }),
+  getInvoiceHistory
+);
+orderRouter.post(
+  `${ORDER}/invoice/update-paid`,
+  passport.authenticate('jwt', { session: false }),
+  updateInvoicePaid
 );
 
 export default orderRouter;

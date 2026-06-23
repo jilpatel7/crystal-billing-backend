@@ -43,7 +43,7 @@ companyStaffRouter.get(
   getCompanyStaff
 );
 
-companyStaffRouter.get(
+companyStaffRouter.post(
   `${COMPANY_STAFF}/get/all`,
   passport.authenticate('jwt', { session: false }),
   getAllCompanyStaff
@@ -55,7 +55,7 @@ companyStaffRouter.get(
   getAllCompanyStaffIdsAndNames
 );
 
-companyStaffRouter.delete(
+companyStaffRouter.post(
   `${COMPANY_STAFF}/delete`,
   passport.authenticate('jwt', { session: false }),
   validationMiddleware(idSchema),

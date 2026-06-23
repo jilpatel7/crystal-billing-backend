@@ -5,7 +5,7 @@ import Party from '../../../sequelize/models/party';
 import { Op } from 'sequelize';
 import _ from 'lodash';
 import PartyAddress from '../../../sequelize/models/party-address';
-import { removeKeys } from '../../../utils';
+import { getListParams, removeKeys } from '../../../utils';
 import db from '../../../sequelize/models';
 
 export const createParty = async (req: Request, res: Response) => {
@@ -222,13 +222,8 @@ export const getParty = async (req: Request, res: Response) => {
 };
 export const getAllParty = async (req: Request, res: Response) => {
   try {
-    let { sort = 'id', order = 'DESC', page = 1, limit = 10, search = '' } = req.query;
+    const { sort, order, limit, offset, search, page } = getListParams(req.body);
     const company_id = +(req.user || 0);
-
-    page = +page;
-    limit = +limit;
-
-    const offset = (page - 1) * limit;
 
     const party = await Party.findAndCountAll({
       include: [
@@ -261,7 +256,8 @@ export const getAllParty = async (req: Request, res: Response) => {
       totalRecords: party.count, // Total number of records
       totalPages: Math.ceil(party.count / limit), // Total pages
       currentPage: page, // Current page
-      data: party.rows, // Paginated data
+      count: party.count, // consumed by the frontend table
+      rows: party.rows, // Paginated data
     };
 
     return generalResponse({

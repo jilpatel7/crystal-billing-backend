@@ -9,8 +9,8 @@ const PARTY = "/party"
 partyRouter.post(`${PARTY}/create`, passport.authenticate("jwt", { session: false }), validationMiddleware(partySchema), createParty);
 partyRouter.put(`${PARTY}/update`, passport.authenticate("jwt", { session: false }), validationMiddleware(partySchema, { isUpdate: true }), updateParty);
 partyRouter.get(`${PARTY}/get`, passport.authenticate("jwt", { session: false }), getParty);
-partyRouter.get(`${PARTY}/get/all`, passport.authenticate("jwt", { session: false }), getAllParty);
+partyRouter.post(`${PARTY}/get/all`, passport.authenticate("jwt", { session: false }), getAllParty);
 partyRouter.get(`${PARTY}/get/allIdsAndNames`, passport.authenticate("jwt", { session: false }), getAllPartyIdsAndNames);
-partyRouter.delete(`${PARTY}/delete`, passport.authenticate("jwt", { session: false }), validationMiddleware(idSchema), deleteParty);
+partyRouter.post(`${PARTY}/delete`, passport.authenticate("jwt", { session: false }), validationMiddleware(idSchema), deleteParty);
 
 export default partyRouter;

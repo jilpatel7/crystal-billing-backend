@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import generalResponse from '../../../helper';
 import { COMPANY_STAFF_RESPONSE } from '../enum';
 import _ from 'lodash';
-import { removeKeys } from '../../../utils';
+import { getListParams, removeKeys } from '../../../utils';
 import CompanyStaff from '../../../sequelize/models/company-staff';
 import { Op } from 'sequelize';
 import StaffAttendance from '../../../sequelize/models/staff-attendance';
@@ -149,12 +149,7 @@ export const getCompanyStaff = async (req: Request, res: Response) => {
 export const getAllCompanyStaff = async (req: Request, res: Response) => {
   try {
     const company_id = +(req.user || 0);
-    let { sort = 'id', order = 'DESC', page = 1, limit = 10, search = '' } = req.query;
-
-    page = +page;
-    limit = +limit;
-
-    const offset = (page - 1) * limit;
+    const { sort, order, limit, offset, search, page } = getListParams(req.body);
 
     const staff = await CompanyStaff.findAndCountAll({
       attributes: [
@@ -185,7 +180,8 @@ export const getAllCompanyStaff = async (req: Request, res: Response) => {
       totalRecords: staff.count, // Total number of records
       totalPages: Math.ceil(staff.count / limit), // Total pages
       currentPage: page, // Current page
-      data: staff.rows, // Paginated data
+      count: staff.count, // consumed by the frontend table
+      rows: staff.rows, // Paginated data
     };
 
     return generalResponse({
