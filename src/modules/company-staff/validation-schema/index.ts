@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { start } from 'repl';
 
 export const companyStaffSchema = Joi.object({
   id: Joi.number().when('$isUpdate', { is: true, then: Joi.required(), otherwise: Joi.optional() }),
@@ -18,4 +19,21 @@ export const companyStaffSchema = Joi.object({
 
 export const idSchema = Joi.object({
   id: Joi.number().required(),
+});
+
+export const staffAttendanceSchema = Joi.object({
+  id: Joi.number().when('$isUpdate', { is: true, then: Joi.required(), otherwise: Joi.optional() }),
+  staff_id: Joi.number().required(),
+  attendance_date: Joi.date().required(),
+  status: Joi.string().valid('present', 'absent', 'half-day').required(),
+  reason: Joi.string().allow('').optional(),
+});
+
+export const staffAttendanceSchemaForLeaveRequest = Joi.object({
+  id: Joi.number().when('$isUpdate', { is: true, then: Joi.required(), otherwise: Joi.optional() }),
+  staff_id: Joi.number().required(),
+  status: Joi.string().valid('absent', 'half-day').required(),
+  start_date: Joi.date().required(),
+  end_date: Joi.date().required(),
+  reason: Joi.string().allow('').optional(),
 });
