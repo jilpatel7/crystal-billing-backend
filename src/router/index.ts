@@ -15,4 +15,8 @@ router.use(`${API}`, orderRouter);
 router.use(`${API}`, companyStaffRouter);
 router.use(`${API}`, companyRouter);
 
+router.get(['/health', `${API}/health`], (req, res) => {
+  res.status(200).json({ status: 'okay' });
+});
+
 export default router;
