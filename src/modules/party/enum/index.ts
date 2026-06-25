@@ -1,5 +1,5 @@
 export enum PARTY_RESPONSE {
-  PARTY_CREATED = "Party successfully created!",
+  PARTY_CREATED = 'Party successfully created!',
   PARTY_UPDATED = 'Party successfully updated!',
   PARTY_DELETED = 'Party deleted successfully!',
   PARTY_FETCH_SUCCESS = 'Party fetched successfully',

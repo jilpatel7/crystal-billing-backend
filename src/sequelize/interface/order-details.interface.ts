@@ -1,10 +1,10 @@
-import { IOrder } from "./order.interface";
+import { IOrder } from './order.interface';
 
 export enum IOrderStatus {
   PENDING = 'pending',
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
-  DELIVERED = 'delivered'
+  DELIVERED = 'delivered',
 }
 export interface IOrderDetails {
   id?: number;

@@ -15,9 +15,8 @@ export const getListParams = (source: Record<string, any> = {}) => {
       : (Math.max(1, +(source.page ?? 1) || 1) - 1) * limit;
 
   const sort = (source.columnToOrder || source.sort || 'id') as string;
-  const order = String(source.orderBy || source.order || 'DESC').toUpperCase() === 'ASC'
-    ? 'ASC'
-    : 'DESC';
+  const order =
+    String(source.orderBy || source.order || 'DESC').toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
 
   const search = (source.search ?? '') as string;
   const page = Math.floor(offset / limit) + 1;

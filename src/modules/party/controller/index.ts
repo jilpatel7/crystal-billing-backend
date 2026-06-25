@@ -11,15 +11,7 @@ import db from '../../../sequelize/models';
 export const createParty = async (req: Request, res: Response) => {
   try {
     const company_id = +(req.user || 0);
-    const {
-      gstin_no,
-      name,
-      email,
-      personal_phone,
-      office_phone,
-      logo,
-      party_addresses,
-    } = req.body;
+    const { gstin_no, name, email, personal_phone, office_phone, logo, party_addresses } = req.body;
     const result = await Party.create(
       {
         company_id,
@@ -247,9 +239,9 @@ export const getAllParty = async (req: Request, res: Response) => {
         company_id,
         name: { [Op.like]: `%${(search as string).toLowerCase()}%` },
       },
-      order: [[sort as string, order as "ASC" | "DESC"]],
+      order: [[sort as string, order as 'ASC' | 'DESC']],
       limit: limit,
-      offset: offset
+      offset: offset,
     });
 
     const responseData = {

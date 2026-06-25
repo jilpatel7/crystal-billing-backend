@@ -8,13 +8,17 @@ export const partySchema = Joi.object({
   personal_phone: Joi.string().trim().optional(),
   office_phone: Joi.string().trim().required(),
   logo: Joi.string(),
-  party_addresses: Joi.array().items(Joi.object({ 
-    id: Joi.number().optional().allow(null),
-    party_id: Joi.number().optional(),
-    address: Joi.string().trim().required(),
-    landmark: Joi.string().trim().optional().allow(''),
-    pincode: Joi.string().trim().required().length(6),
-  })).required(),
+  party_addresses: Joi.array()
+    .items(
+      Joi.object({
+        id: Joi.number().optional().allow(null),
+        party_id: Joi.number().optional(),
+        address: Joi.string().trim().required(),
+        landmark: Joi.string().trim().optional().allow(''),
+        pincode: Joi.string().trim().required().length(6),
+      })
+    )
+    .required(),
   removed_address_ids: Joi.array().items(Joi.number()).optional(),
 });
 

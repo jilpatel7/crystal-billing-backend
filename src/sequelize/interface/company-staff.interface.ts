@@ -1,4 +1,4 @@
-import { ICompany } from "./companies.interface";
+import { ICompany } from './companies.interface';
 
 export interface ICompanyStaff {
   id?: number;

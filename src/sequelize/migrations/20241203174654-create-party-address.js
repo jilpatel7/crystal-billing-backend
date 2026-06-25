@@ -7,41 +7,41 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       party_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'parties',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       address: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       landmark: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       pincode: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       deleted_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('party_addresses');
-  }
+  },
 };

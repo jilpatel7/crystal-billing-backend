@@ -1,6 +1,6 @@
-import { ICompany } from "./companies.interface";
-import { IOrder } from "./order.interface";
-import { IPartyAddress } from "./party-address.interface";
+import { ICompany } from './companies.interface';
+import { IOrder } from './order.interface';
+import { IPartyAddress } from './party-address.interface';
 
 export interface IParty {
   id?: number;
@@ -18,5 +18,5 @@ export interface IParty {
   company?: ICompany;
   party_addresses?: IPartyAddress;
   orders?: IOrder[];
-  companies_with_orders?: ICompany[]
+  companies_with_orders?: ICompany[];
 }

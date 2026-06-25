@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import IEnvVariables from "./types";
+import dotenv from 'dotenv';
+import IEnvVariables from './types';
 
 // Load environment variables from the `.env` file
 dotenv.config({ path: `.env` });
@@ -16,23 +16,17 @@ const getEnvVariable = (key: string, defaultValue?: any): any => {
 export const {
   PORT,
   JWT_SECRET,
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_HOST,
-  DB_PORT,
+  DATABASE_URL,
   DB_DIALECT,
-  DATABASE,
+  DB_SSL,
   DB_LOGGING,
   FRONT_URL,
 }: IEnvVariables = {
-  PORT: getEnvVariable("PORT", "8080"),
-  JWT_SECRET: getEnvVariable("JWT_SECRET"),
-  DB_USERNAME: getEnvVariable("DB_USERNAME"),
-  DB_PASSWORD: getEnvVariable("DB_PASSWORD"),
-  DB_HOST: getEnvVariable("DB_HOST"),
-  DB_PORT: getEnvVariable("DB_PORT"),
-  DB_DIALECT: getEnvVariable("DB_DIALECT"),
-  DATABASE: getEnvVariable("DATABASE"),
-  DB_LOGGING: getEnvVariable("DB_LOGGING", false),
-  FRONT_URL: getEnvVariable("FRONT_URL", "http://localhost:5173"),
+  PORT: getEnvVariable('PORT', '8080'),
+  JWT_SECRET: getEnvVariable('JWT_SECRET'),
+  DATABASE_URL: getEnvVariable('DATABASE_URL'),
+  DB_DIALECT: getEnvVariable('DB_DIALECT', 'postgres'),
+  DB_SSL: getEnvVariable('DB_SSL', 'true'),
+  DB_LOGGING: getEnvVariable('DB_LOGGING', false),
+  FRONT_URL: getEnvVariable('FRONT_URL', 'http://localhost:5173'),
 };

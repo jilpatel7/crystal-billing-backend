@@ -211,10 +211,10 @@ export const getAllOrders = async (req: Request, res: Response) => {
           dateFrom && dateTo
             ? { received_at: { [Op.between]: [dateFrom, dateTo] } }
             : dateFrom
-            ? { received_at: { [Op.gte]: dateFrom } }
-            : dateTo
-            ? { received_at: { [Op.lte]: dateTo } }
-            : null,
+              ? { received_at: { [Op.gte]: dateFrom } }
+              : dateTo
+                ? { received_at: { [Op.lte]: dateTo } }
+                : null,
         ],
         [Op.or]: [
           { jagad_no: { [Op.like]: `%${search}%` } },
@@ -443,10 +443,7 @@ function generateHTML({ company, party, orders, dateFrom, dateTo }: BillParams):
 
   const companyName = (company?.name || 'Company').toUpperCase();
   const billPeriod =
-    dateFrom || dateTo
-      ? `${formatDate(dateFrom)} - ${formatDate(dateTo)}`
-      : 'All time';
-
+    dateFrom || dateTo ? `${formatDate(dateFrom)} - ${formatDate(dateTo)}` : 'All time';
 
   const totalLot = billData.reduce((sum, item) => sum + item.lot, 0);
   const totalCaret = billData.reduce((sum, item) => sum + item.caret, 0);
@@ -756,12 +753,8 @@ export const generateBill = async (req: Request, res: Response) => {
 
       await InvoiceHistory.create({
         party_id,
-        start_date: dateFrom
-          ? new Date(dateFrom)
-          : orders[0]?.received_at || new Date(),
-        end_date: dateTo
-          ? new Date(dateTo)
-          : orders[orders.length - 1]?.received_at || new Date(),
+        start_date: dateFrom ? new Date(dateFrom) : orders[0]?.received_at || new Date(),
+        end_date: dateTo ? new Date(dateTo) : orders[orders.length - 1]?.received_at || new Date(),
         total_amount: parseFloat(totalAmount.toFixed(2)),
         paid_amount: Number(paid_amount) || 0,
       });
@@ -853,10 +846,7 @@ export const updateInvoicePaid = async (req: Request, res: Response) => {
       });
     }
 
-    await InvoiceHistory.update(
-      { paid_amount: Number(paid_amount) || 0 },
-      { where: { id } }
-    );
+    await InvoiceHistory.update({ paid_amount: Number(paid_amount) || 0 }, { where: { id } });
 
     return generalResponse({
       message: 'Payment updated successfully.',

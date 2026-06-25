@@ -1,8 +1,23 @@
-import { DataTypes } from "sequelize";
-import { AllowNull, AutoIncrement, BeforeCreate, BeforeValidate, BelongsTo, Column, CreatedAt, Default, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IOrderDetails, IOrderStatus } from "../interface/order-details.interface";
-import Order from "./order";
-import Party from "./party";
+import { DataTypes } from 'sequelize';
+import {
+  AllowNull,
+  AutoIncrement,
+  BeforeCreate,
+  BeforeValidate,
+  BelongsTo,
+  Column,
+  CreatedAt,
+  Default,
+  DeletedAt,
+  ForeignKey,
+  Model,
+  PrimaryKey,
+  Table,
+  UpdatedAt,
+} from 'sequelize-typescript';
+import { IOrderDetails, IOrderStatus } from '../interface/order-details.interface';
+import Order from './order';
+import Party from './party';
 
 @Table({
   tableName: 'order_details',
@@ -10,7 +25,6 @@ import Party from "./party";
   paranoid: true,
 })
 export default class OrderDetails extends Model<IOrderDetails> {
-
   @PrimaryKey
   @AutoIncrement
   @AllowNull(false)
@@ -21,32 +35,32 @@ export default class OrderDetails extends Model<IOrderDetails> {
 
   @ForeignKey(() => Order)
   @Column({
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   })
   declare order_id: number;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   })
   declare no_of_diamonds: number;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.FLOAT
+    type: DataTypes.FLOAT,
   })
   declare total_caret: number;
 
   @AllowNull(false)
   @Default('pending')
   @Column({
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   })
   declare status: IOrderStatus;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.FLOAT
+    type: DataTypes.FLOAT,
   })
   declare price_per_caret: number;
 

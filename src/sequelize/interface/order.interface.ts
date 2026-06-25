@@ -1,6 +1,6 @@
-import { ICompany } from "./companies.interface";
-import { IOrderDetails, IOrderStatus } from "./order-details.interface";
-import { IParty } from "./parties.interface";
+import { ICompany } from './companies.interface';
+import { IOrderDetails, IOrderStatus } from './order-details.interface';
+import { IParty } from './parties.interface';
 
 export interface IOrder {
   id?: number;

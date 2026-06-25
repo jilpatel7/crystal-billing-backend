@@ -1,9 +1,28 @@
-import { AllowNull, AutoIncrement, BeforeDestroy, BeforeUpdate, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, Default, DeletedAt, ForeignKey, HasMany, HasOne, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IParty } from "../interface";
-import Company from "./company";
-import PartyAddress from "./party-address";
-import Order from "./order";
-import InvoiceHistory from "./invoice-history";
+import {
+  AllowNull,
+  AutoIncrement,
+  BeforeDestroy,
+  BeforeUpdate,
+  BelongsTo,
+  BelongsToMany,
+  Column,
+  CreatedAt,
+  DataType,
+  Default,
+  DeletedAt,
+  ForeignKey,
+  HasMany,
+  HasOne,
+  Model,
+  PrimaryKey,
+  Table,
+  UpdatedAt,
+} from 'sequelize-typescript';
+import { IParty } from '../interface';
+import Company from './company';
+import PartyAddress from './party-address';
+import Order from './order';
+import InvoiceHistory from './invoice-history';
 
 @Table({
   tableName: 'parties',
@@ -15,45 +34,45 @@ export default class Party extends Model<IParty> {
   @AutoIncrement
   @AllowNull(false)
   @Column({
-    type: DataType.INTEGER
+    type: DataType.INTEGER,
   })
   declare id: number;
 
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare gstin_no: string;
 
   @ForeignKey(() => Company)
   @Column({
-    type: DataType.INTEGER
+    type: DataType.INTEGER,
   })
   declare company_id: number;
 
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare name: string;
 
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare email: string;
 
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare personal_phone: string;
 
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare office_phone: string;
 
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   declare logo: string;
 
@@ -67,7 +86,7 @@ export default class Party extends Model<IParty> {
   declare deleted_at: Date;
 
   @BelongsTo(() => Company)
-  declare company: Company
+  declare company: Company;
 
   @HasMany(() => PartyAddress)
   declare party_addresses: PartyAddress[];
@@ -87,4 +106,4 @@ export default class Party extends Model<IParty> {
       where: { party_id: instance.id },
     });
   }
-}  
+}

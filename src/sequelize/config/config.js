@@ -1,26 +1,28 @@
-require("ts-node").register();
-const dotenv = require('dotenv')
+require('ts-node').register();
+const dotenv = require('dotenv');
 
 // dot env config
-dotenv.config()
+dotenv.config();
 
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DATABASE = process.env.DATABASE;
-const DB_HOST = process.env.DB_HOST;
-const DB_PORT = process.env.DB_PORT;
-const DB_DIALECT = process.env.DB_DIALECT;
+const DATABASE_URL = process.env.DATABASE_URL;
+const DB_DIALECT = process.env.DB_DIALECT || 'postgres';
+const DB_SSL = process.env.DB_SSL || 'true';
+
+const dialectOptions = {
+  bigNumberStrings: true,
+};
+
+if (DB_SSL === 'true') {
+  dialectOptions.ssl = {
+    require: true,
+    rejectUnauthorized: false,
+  };
+}
 
 module.exports = {
   development: {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: DATABASE,
-    host: DB_HOST,
-    port: DB_PORT,
+    url: DATABASE_URL,
     dialect: DB_DIALECT,
-    dialectOptions: {
-      bigNumberStrings: true,
-    },
+    dialectOptions,
   },
 };

@@ -1,4 +1,4 @@
-import { IParty } from "./parties.interface";
+import { IParty } from './parties.interface';
 
 export interface IPartyAddress {
   id?: number;

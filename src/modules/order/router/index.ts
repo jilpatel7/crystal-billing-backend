@@ -37,7 +37,11 @@ orderRouter.post(
   validationMiddleware(idSchema),
   deleteOrder
 );
-orderRouter.post(`${ORDER}/get/all`, passport.authenticate('jwt', { session: false }), getAllOrders);
+orderRouter.post(
+  `${ORDER}/get/all`,
+  passport.authenticate('jwt', { session: false }),
+  getAllOrders
+);
 orderRouter.get(`${ORDER}/get`, passport.authenticate('jwt', { session: false }), getOrder);
 orderRouter.post(
   `${ORDER}/lot/create`,

@@ -1,7 +1,19 @@
-import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DeletedAt, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { IInvoiceHistory } from "../interface/invoice-history.interface";
-import { DataTypes } from "sequelize";
-import Party from "./party";
+import {
+  AllowNull,
+  AutoIncrement,
+  BelongsTo,
+  Column,
+  CreatedAt,
+  DeletedAt,
+  ForeignKey,
+  Model,
+  PrimaryKey,
+  Table,
+  UpdatedAt,
+} from 'sequelize-typescript';
+import { IInvoiceHistory } from '../interface/invoice-history.interface';
+import { DataTypes } from 'sequelize';
+import Party from './party';
 
 @Table({
   tableName: 'invoice-history',
@@ -13,38 +25,38 @@ export default class InvoiceHistory extends Model<IInvoiceHistory> {
   @AutoIncrement
   @AllowNull(false)
   @Column({
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   })
   declare id: number;
 
   @ForeignKey(() => Party)
   @Column({
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   })
   declare party_id: number;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
   })
   declare start_date: Date;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
   })
   declare end_date: Date;
 
   @AllowNull(false)
   @Column({
-    type: DataTypes.FLOAT
+    type: DataTypes.FLOAT,
   })
   declare total_amount: number;
 
   @AllowNull(false)
   @Column({
     type: DataTypes.FLOAT,
-    defaultValue: 0
+    defaultValue: 0,
   })
   declare paid_amount: number;
 

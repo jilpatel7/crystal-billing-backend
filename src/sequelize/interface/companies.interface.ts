@@ -1,6 +1,6 @@
-import { ICompanyStaff } from "./company-staff.interface";
-import { IOrder } from "./order.interface";
-import { IParty } from "./parties.interface";
+import { ICompanyStaff } from './company-staff.interface';
+import { IOrder } from './order.interface';
+import { IParty } from './parties.interface';
 
 export interface ICompany {
   id?: number;

@@ -1,18 +1,18 @@
-import { NextFunction, Request, Response } from "express";
-import Joi, { ObjectSchema } from "joi";
-import generalResponse from "../helper";
-import { JWT_SECRET } from "../config";
-import { Strategy } from "passport-jwt";
-import passport from "passport";
+import { NextFunction, Request, Response } from 'express';
+import Joi, { ObjectSchema } from 'joi';
+import generalResponse from '../helper';
+import { JWT_SECRET } from '../config';
+import { Strategy } from 'passport-jwt';
+import passport from 'passport';
 
 export const validationMiddleware = (schema: ObjectSchema, context?: Joi.Context) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body, { abortEarly: false, context },);
+    const { error } = schema.validate(req.body, { abortEarly: false, context });
     if (error) {
       return generalResponse({
         response: res,
         message: error.message,
-        response_type: "failure",
+        response_type: 'failure',
         statusCode: 400,
       });
     }
@@ -23,7 +23,7 @@ export const validationMiddleware = (schema: ObjectSchema, context?: Joi.Context
 const cookieExtractor = (req: Request) => {
   let token = null;
   if (req && req.cookies) {
-    token = req.cookies["token"];
+    token = req.cookies['token'];
   }
   return token;
 };
@@ -39,4 +39,3 @@ const jwtStrategy = new Strategy(options, (payload, next) => {
   }
 });
 export default passport.use(jwtStrategy);
-
