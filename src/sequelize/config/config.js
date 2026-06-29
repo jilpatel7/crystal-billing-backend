@@ -1,4 +1,3 @@
-require('ts-node').register();
 const dotenv = require('dotenv');
 
 // dot env config
@@ -19,10 +18,16 @@ if (DB_SSL === 'true') {
   };
 }
 
+const config = {
+  url: DATABASE_URL,
+  dialect: DB_DIALECT,
+  dialectOptions,
+};
+
+// sequelize-cli selects the entry by NODE_ENV (defaults to "development"),
+// so expose the same env-driven config for every environment.
 module.exports = {
-  development: {
-    url: DATABASE_URL,
-    dialect: DB_DIALECT,
-    dialectOptions,
-  },
+  development: config,
+  test: config,
+  production: config,
 };
