@@ -17,7 +17,8 @@ module.exports = {
         },
       ],
       {
-        updateOnDuplicate: ['id', 'email'],
+        updateOnDuplicate: ['email'],
+        upsertKeys: ['id'],
       }
     );
   },
