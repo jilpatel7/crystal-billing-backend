@@ -7,6 +7,9 @@ import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
+// Required so `secure` cookies work when running behind a hosting proxy (Vercel/Render/Railway/etc.)
+app.set('trust proxy', 1);
+
 app.use(
   cors({
     origin: FRONT_URL,

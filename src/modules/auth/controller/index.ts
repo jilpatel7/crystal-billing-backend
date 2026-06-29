@@ -26,7 +26,16 @@ export const loginCompany = async (req: Request, res: Response) => {
 
     if (isPasswordMatch) {
       const token = jwt.sign({ id: company.id }, JWT_SECRET, { expiresIn: '1d' });
-      res.cookie('token', token);
+      const isProd = process.env.NODE_ENV === 'production';
+      res.cookie('token', token, {
+        httpOnly: true,
+        // Cross-site cookies (frontend and backend on different domains in prod)
+        // require SameSite=None + Secure. Locally over http we must NOT set these,
+        // otherwise the browser drops the cookie.
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
+        maxAge: 24 * 60 * 60 * 1000, // 1 day, matches the JWT expiry
+      });
       return generalResponse({
         data: company,
         response: res,
