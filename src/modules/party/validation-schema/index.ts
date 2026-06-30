@@ -13,12 +13,15 @@ export const partySchema = Joi.object({
       Joi.object({
         id: Joi.number().optional().allow(null),
         party_id: Joi.number().optional(),
+        // address & pincode are NOT NULL in the DB, so any provided row must
+        // carry them; the array itself is optional (a party may have none).
         address: Joi.string().trim().required(),
         landmark: Joi.string().trim().optional().allow(''),
         pincode: Joi.string().trim().required().length(6),
       })
     )
-    .required(),
+    .optional()
+    .default([]),
   removed_address_ids: Joi.array().items(Joi.number()).optional(),
 });
 

@@ -11,7 +11,7 @@ import db from '../../../sequelize/models';
 export const createParty = async (req: Request, res: Response) => {
   try {
     const company_id = +(req.user || 0);
-    const { gstin_no, name, email, personal_phone, office_phone, logo, party_addresses } = req.body;
+    const { gstin_no, name, email, personal_phone, office_phone, logo, party_addresses = [] } = req.body;
     const result = await Party.create(
       {
         company_id,
